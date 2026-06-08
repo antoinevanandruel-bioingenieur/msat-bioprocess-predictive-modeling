@@ -13,7 +13,7 @@ Pour garantir la fiabilité de ces prédictions de Densité Cellulaire Viable (V
 La MSE mesure la moyenne des carrés des écarts entre les prédictions du modèle et les valeurs réelles de production.
 * **Formule mathématique :** 
   $$MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2$$
-* **Pourquoi le carré ?** Élever l'erreur au carré permet d'éliminer les signes négatifs et de pénaliser de manière exponentielle les écarts importants (Outliers), ce qui est critique pour la sécurité d'un bioprocédé chez UCB.
+* **Pourquoi le carré ?** Élever l'erreur au carré permet d'éliminer les signes négatifs et de pénaliser de manière exponentielle les écarts importants (Outliers).
 
 ### 2. Root Mean Squared Error (RMSE)
 Dans le script, nous appliquons la racine carrée à la MSE ($\sqrt{MSE}$). Cela permet de ramener l'indicateur d'erreur à l'unité de mesure biologique réelle (en Millions de cellules par mL), rendant l'interprétation immédiatement exploitable par les ingénieurs de culture cellulaire.
