@@ -1,0 +1,80 @@
+import numpy as np
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.model_selection import train_test_split
+
+# ==========================================
+# ÉTAPE 1 : CHARGEMENT DES DONNÉES DU PROJET 1
+# ==========================================
+# Nous réutilisons le fichier propre généré à l'étape précédente
+try:
+    df = pd.read_csv("data_example_clean.csv")
+    print("✅ Données du Projet 1 chargées avec succès.")
+except FileNotFoundError:
+    # Données de secours si le fichier n'est pas sur votre disque
+    data = {
+        "pH": [7.10, 7.05, 7.12, 7.15],
+        "DO_Percent": [50.2, 49.8, 50.5, 51.0],
+        "Viable_Cell_Density_M_mL": [4.5, 7.2, 12.1, 14.5],
+    }
+    df = pd.DataFrame(data)
+    print("⚠️ Fichier précédent non trouvé. Utilisation de données de secours.")
+
+# ==========================================
+# ÉTAPE 2 : PRÉPARATION DES CARACTÉRISTIQUES (FEATURES)
+# ==========================================
+# X = Ce que le modèle analyse pour deviner (les paramètres du bioréacteur)
+X = df[["pH", "DO_Percent"]]
+
+# y = Ce que le modèle doit deviner (la densité cellulaire biologique)
+y = df["Viable_Cell_Density_M_mL"]
+
+# Séparation des données : 80% pour l'entraînement, 20% pour le test de validation
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_test_size=0.2, random_state=42
+)
+
+# ==========================================
+# ÉTAPE 3 : ENTRAÎNEMENT DU MODÈLE DE MACHINE LEARNING
+# ==========================================
+# Initialisation du modèle de régression linéaire multiple
+modele_msat = LinearRegression()
+
+# Entraînement sur les données biologiques
+modele_msat.fit(X_train, y_train)
+print("🤖 Modèle de régression MSAT entraîné.")
+
+# ==========================================
+# ÉTAPE 4 : ÉVALUATION ET SÉCURITÉ BIOPROCÉDÉ
+# ==========================================
+# Calcul des prédictions sur nos données de validation
+predictions = modele_msat.predict(X_test)
+
+# Métriques de performance standard pour les audits qualité (QA)
+rmse = np.sqrt(mean_squared_error(y_test, predictions))
+print(f"📊 Erreur de prédiction (RMSE) : {rmse:.4f} M/mL")
+
+
+# ==========================================
+# ÉTAPE 5 : FONCTION DE PRODUCTION (VOTRE LIVRABLE)
+# ==========================================
+def predire_prochaine_vcd(ph_actuel, do_actuel):
+    """Prend les données en direct d'un bioréacteur et prédit la densité cellulaire."""
+    donnees_capteurs = pd.DataFrame([[ph_actuel, do_actuel]], columns=["pH", "DO_Percent"])
+    prediction_vcd = modele_msat.predict(donnees_capteurs)[0]
+
+    # Sécurité : Une densité cellulaire ne peut pas être négative
+    return max(0.0, round(prediction_vcd, 2))
+
+
+# --- TEST DE PRODUCTION EN DIRECT ---
+# Imaginons un bioréacteur en cours de run chez UCB avec un pH de 7.08 et un DO à 50%
+ph_bioréacteur = 7.08
+do_bioréacteur = 50.0
+
+vcd_estimee = predire_prochaine_vcd(ph_bioréacteur, do_bioréacteur)
+
+print("\n📈 --- RÉSULTAT DU LIVE MONITORING ---")
+print(f"Pour pH={ph_bioréacteur} et DO={do_bioréacteur}%")
+print(f"La densité cellulaire estimée est de : {vcd_estimee} M/mL")
