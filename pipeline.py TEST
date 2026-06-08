@@ -71,7 +71,7 @@ def predire_prochaine_vcd(ph_actuel, do_actuel):
 
 
 # --- TEST DE PRODUCTION EN DIRECT ---
-# Imaginons un bioréacteur en cours de run chez UCB avec un pH de 7.08 et un DO à 50%
+# Imaginons un bioréacteur en cours de run avec un pH de 7.08 et un DO à 50%
 ph_bioréacteur = 7.08
 do_bioréacteur = 50.0
 
@@ -80,3 +80,6 @@ vcd_estimee = predire_prochaine_vcd(ph_bioréacteur, do_bioréacteur)
 print("\n📈 --- RÉSULTAT DU LIVE MONITORING ---")
 print(f"Pour pH={ph_bioréacteur} et DO={do_bioréacteur}%")
 print(f"La densité cellulaire estimée est de : {vcd_estimee} M/mL")
+
+# Bon évidemment mon résultat est très mauvais car je m'appuie uniquement sur 4 valeurs ...!
+
