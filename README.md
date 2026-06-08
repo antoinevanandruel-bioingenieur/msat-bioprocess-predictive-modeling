@@ -16,5 +16,4 @@ La MSE mesure la moyenne des carrés des écarts entre les prédictions du modè
 * **Pourquoi le carré ?** Élever l'erreur au carré permet d'éliminer les signes négatifs et de pénaliser de manière exponentielle les écarts importants (Outliers).
 
 ### 2. Root Mean Squared Error (RMSE)
-Dans le script, nous appliquons la racine carrée à la MSE ($\sqrt{MSE}$). Cela permet de ramener l'indicateur d'erreur à l'unité de mesure biologique réelle (en Millions de cellules par mL), rendant l'interprétation immédiatement exploitable par les ingénieurs de culture cellulaire.
-Utilisez le code avec précaution.Souhaitez-vous que nous ajoutions également l'explication textuelle du R² (R-squared) pour compléter définitivement la section validation de votre documentation ?Les réponses de l'IA peuvent contenir des erreurs. En savoir plus
+Dans le script, nous appliquons la racine carrée à la MSE ($\sqrt{MSE}$). Cela permet de ramener l'indicateur d'erreur à l'unité de mesure biologique réelle (en Millions de cellules par mL), rendant l'interprétation immédiatement exploitable.
